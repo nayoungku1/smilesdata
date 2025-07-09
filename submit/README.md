@@ -18,7 +18,7 @@
 - **Notes:** `allDescriptorFeature.ipynb` -> `label_transform.ipynb` > `QuantileTransformer` ->`optuna_feature_selection.py`에서 trial 100 (`100+quantile_selected_features.csv`)-> `pycarat_nrmse.py` 
 - **Metric**: NRMSE
 - **y**: transformed by Quantile
-- **run**:```bash conda run -n smiles python pycarat_nrmse.py \ 
+- **run**: ```conda run -n smiles python pycarat_nrmse.py \ 
     --X_train data/X_train_allDescriptors.csv \
     --y_train data/y_train_quantile.csv --y_train_transformer data/quantile_transformer.pkl \
     --X_test data/X_test_allDescriptors.csv  --feature_file 100+quantile_selected_features.csv ```
@@ -30,7 +30,7 @@
 - **Notes:** `allDescriptorFeature.ipynb` -> `label_transform.ipynb` > `PowerTransformer` ->`optuna_feature_selection.py`에서 trial 100 (`100+powered_selected_features.csv`)-> `pycarat_nrmse.py` 
 - **Metric**: NRMSE
 - **y**: transformed by power
-- **run**:```bash conda run -n smiles python pycarat_nrmse.py \ 
+- **run**: ```conda run -n smiles python pycarat_nrmse.py \ 
     --X_train data/X_train_allDescriptors.csv \
     --y_train data/y_train_power.csv --y_train_transformer data/power_transformer.pkl \      
     --X_test data/X_test_allDescriptors.csv  --feature_file 100+powered_selected_features.csv ```
