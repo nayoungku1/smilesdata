@@ -25,6 +25,8 @@ def parse_args():
     p.add_argument("--X_test",  required=True)
     p.add_argument("--feature_file", required=True,
                    help="CSV with selected feature names (one col)")
+    p.add_argument("--y_train_transformer", type=str, default=False,
+                   help="transformer if the y_train is transformed")
     return p.parse_args()
 
 # ---------------- Core ----------------
@@ -106,12 +108,15 @@ def main():
         metric_func=nrmse,           # <‑ 함수 직접
         greater_is_better=False
     )
-
-    # 4) 필요하면 저장
-    
     submit = pd.read_csv('data/sample_submission.csv')
     submit['Inhibition'] = pd.Series(y_pred, name="prediction")
-    submit.to_csv('submit/pycarat_baseline_submit.csv',index=False)
-
+    from inverse_label import inverse_label
+    # 4) 필요하면 저장
+    if args.y_train_transformer: 
+        submit['Inhibition']  = inverse_label(args.y_train_transformer, submit['Inhibition'].values)
+        submit.to_csv(f'submit/pycarat_{args.y_train_transformer[5:-4]}_baseline_submit.csv',index=False)
+    else: 
+        submit.to_csv('submit/pycarat_baseline_submit.csv',index=False)
+        
 if __name__ == "__main__":
     main()
