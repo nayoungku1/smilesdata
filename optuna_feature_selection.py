@@ -27,6 +27,8 @@ def parse_args():
                    help="CSV with shape (n_samples, 1)")
     p.add_argument("--trials", type=int, default=200,
                    help="Number of Optuna trials (default: 200)")
+    p.add_argument("--output", type=str, required=True,
+                   help="selected_feature prefix")
     return p.parse_args()
 
 # ---------------- 메인 ----------------
@@ -87,8 +89,8 @@ def main():
     print(f"▶ Selected features: {best_mask.sum()}/{n_features}")
 
     selected_cols = X_df.columns[best_mask]
-    selected_cols.to_series().to_csv("selected_features.csv", index=False)
-    print("▶ Saved mask → selected_features.csv")
+    selected_cols.to_series().to_csv(f"{args.trials}+{args.output}_selected_features.csv", index=False)
+    print(f"▶ Saved mask → {args.trials}+{args.output}_selected_features.csv")
 
     import os
     os.makedirs("optuna_plots", exist_ok=True)
@@ -110,8 +112,8 @@ def main():
     fig_mpl = plot_optimization_history_mpl(study)
     fig_mpl.set_title("Optimization History (nRMSE)")
     plt.tight_layout()
-    plt.savefig(f"optuna_plots/{args.trials}trials_plot_optimization_history.png", dpi=300)
-    print(f"Saved static plot: {args.trials}trials_plot_optimization_history.png")
+    plt.savefig(f"optuna_plots/{args.trials}+{args.output}+trials_plot_optimization_history.png", dpi=300)
+    print(f"Saved static plot: {args.trials}+{args.output}+trials_plot_optimization_history.png")
 
 if __name__ == "__main__":
     main()
