@@ -111,7 +111,7 @@ def main():
     
     submit = pd.read_csv('data/sample_submission.csv')
     submit['Inhibition'] = pd.Series(y_pred, name="prediction")
-    submit.to_csv('pycarat_baseline_submit.csv',index=False)
+    submit.to_csv('submit/pycarat_baseline_submit.csv',index=False)
 
 if __name__ == "__main__":
     main()
